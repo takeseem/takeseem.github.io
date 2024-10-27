@@ -12,7 +12,7 @@ importers:
         specifier: 2.0.0-rc.18
         version: 2.0.0-rc.18(@types/node@22.8.1)(sass-embedded@1.80.4)
       sass-embedded:
-        specifier: ^1.79.5
+        specifier: ^1.80.4
         version: 1.80.4
       vue:
         specifier: ^3.5.12
