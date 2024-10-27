@@ -2,11 +2,11 @@
 home: true
 layout: BlogHome
 icon: home
-title: 博客主页
-heroImage: https://theme-hope-assets.vuejs.press/logo.svg
-heroText: 你博客的名称
+title: 主页
+heroImage: /logo.png
+heroText: 全球指数
 heroFullScreen: true
-tagline: 你可以在这里放置你的口号与标语
+tagline: 一个自由之地
 projects:
   - icon: project
     name: 项目名称
@@ -33,10 +33,10 @@ projects:
     desc: 伙伴详细介绍
     link: https://你的伙伴链接
 
-  - icon: https://theme-hope-assets.vuejs.press/logo.svg
-    name: 自定义项目
-    desc: 自定义详细介绍
-    link: https://你的自定义链接
+  - icon: https://avatars.githubusercontent.com/u/4768523
+    name: GitHub
+    desc: GitHub 主页
+    link: https://github.com/takeseem
 
 footer: 自定义你的页脚文字
 ---
