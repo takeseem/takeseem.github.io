@@ -5,6 +5,8 @@ import sidebar from "./sidebar.js";
 
 export default hopeTheme({
   hostname: "https://www.takeseem.com",
+  darkmode: "toggle",
+  fullscreen: true,
 
   author: {
     name: "全球指数",
@@ -31,7 +33,7 @@ export default hopeTheme({
 
   // 博客相关
   blog: {
-    description: "自由软件爱好者",
+    description: "分享经验、传递价值、成就你我",
     intro: "/intro.html",
     medias: {
       // Baidu: "https://example.com",
