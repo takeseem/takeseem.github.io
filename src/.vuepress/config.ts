@@ -1,5 +1,7 @@
 import { defineUserConfig } from "vuepress";
 import { getDirname, path } from "vuepress/utils";
+import { googleAnalyticsPlugin } from '@vuepress/plugin-google-analytics';
+
 
 const __dirname = getDirname(import.meta.url);
 
@@ -18,6 +20,12 @@ export default defineUserConfig({
   },
 
   theme,
+
+  plugins: [
+    googleAnalyticsPlugin({
+      id: "G-1XKV285RL6",
+    }),
+  ],
 
   // 和 PWA 一起启用
   // shouldPrefetch: false,
