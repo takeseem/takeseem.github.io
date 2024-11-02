@@ -1,7 +1,7 @@
 import { defineUserConfig } from "vuepress";
 import { getDirname, path } from "vuepress/utils";
 import { googleAnalyticsPlugin } from '@vuepress/plugin-google-analytics';
-
+import { baiduAnalyticsPlugin } from '@vuepress/plugin-baidu-analytics'
 
 const __dirname = getDirname(import.meta.url);
 
@@ -24,6 +24,9 @@ export default defineUserConfig({
   plugins: [
     googleAnalyticsPlugin({
       id: "G-1XKV285RL6",
+    }),
+    baiduAnalyticsPlugin({
+      id: "c1d8fdbe93196004b7679ce595a70285"
     }),
   ],
 

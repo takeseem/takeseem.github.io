@@ -11,6 +11,9 @@ importers:
       '@vuepress/bundler-vite':
         specifier: 2.0.0-rc.18
         version: 2.0.0-rc.18(@types/node@22.8.6)(sass-embedded@1.80.6)
+      '@vuepress/plugin-baidu-analytics':
+        specifier: 2.0.0-rc.57
+        version: 2.0.0-rc.57(vuepress@2.0.0-rc.18(@vuepress/bundler-vite@2.0.0-rc.18(@types/node@22.8.6)(sass-embedded@1.80.6))(vue@3.5.12))
       '@vuepress/plugin-google-analytics':
         specifier: 2.0.0-rc.54
         version: 2.0.0-rc.54(vuepress@2.0.0-rc.18(@vuepress/bundler-vite@2.0.0-rc.18(@types/node@22.8.6)(sass-embedded@1.80.6))(vue@3.5.12))
@@ -697,6 +700,11 @@ packages:
     peerDependencies:
       vuepress: 2.0.0-rc.18
 
+  '@vuepress/helper@2.0.0-rc.57':
+    resolution: {integrity: sha512-6tJpiVCMdJ5bu5tvH51o+SIDyQG20kqYBvOPeRRsBVGjp8n0rH6KDGY0xDEkd/HF8mJ9UPqNYvqhsQyI3iKKWQ==}
+    peerDependencies:
+      vuepress: 2.0.0-rc.18
+
   '@vuepress/highlighter-helper@2.0.0-rc.56':
     resolution: {integrity: sha512-ol7bOQdg5/CxGYMCDV6ucQKT2AeJTLKc6I4OwzzMjkiBEH/u3PNyq5rDXFr6pgSmlboZ5Clx9H7aajXfYilY+w==}
     peerDependencies:
@@ -716,6 +724,11 @@ packages:
 
   '@vuepress/plugin-back-to-top@2.0.0-rc.56':
     resolution: {integrity: sha512-qlX/VHX3RRQnZIGrIqVNb+zwwPjV/9FMt8e/aITxp0gpaGaddOS8FFwVK8tOuKAJQVnq+QHJZtO+RdguS5216g==}
+    peerDependencies:
+      vuepress: 2.0.0-rc.18
+
+  '@vuepress/plugin-baidu-analytics@2.0.0-rc.57':
+    resolution: {integrity: sha512-RyWdqLJrnWRj7iF2K8khzgaWwMu551Ve0ogpcsZZyDazWhLb+r0tRAHDE5jjJoz/Br3dUgFQ5i1fZwk8eM9Igg==}
     peerDependencies:
       vuepress: 2.0.0-rc.18
 
@@ -2678,6 +2691,19 @@ snapshots:
       - '@vue/composition-api'
       - typescript
 
+  '@vuepress/helper@2.0.0-rc.57(vuepress@2.0.0-rc.18(@vuepress/bundler-vite@2.0.0-rc.18(@types/node@22.8.6)(sass-embedded@1.80.6))(vue@3.5.12))':
+    dependencies:
+      '@vue/shared': 3.5.12
+      '@vueuse/core': 11.2.0(vue@3.5.12)
+      cheerio: 1.0.0
+      fflate: 0.8.2
+      gray-matter: 4.0.3
+      vue: 3.5.12
+      vuepress: 2.0.0-rc.18(@vuepress/bundler-vite@2.0.0-rc.18(@types/node@22.8.6)(sass-embedded@1.80.6))(vue@3.5.12)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - typescript
+
   '@vuepress/highlighter-helper@2.0.0-rc.56(@vueuse/core@11.2.0(vue@3.5.12))(vuepress@2.0.0-rc.18(@vuepress/bundler-vite@2.0.0-rc.18(@types/node@22.8.6)(sass-embedded@1.80.6))(vue@3.5.12))':
     dependencies:
       vuepress: 2.0.0-rc.18(@vuepress/bundler-vite@2.0.0-rc.18(@types/node@22.8.6)(sass-embedded@1.80.6))(vue@3.5.12)
@@ -2718,6 +2744,15 @@ snapshots:
     dependencies:
       '@vuepress/helper': 2.0.0-rc.56(vuepress@2.0.0-rc.18(@vuepress/bundler-vite@2.0.0-rc.18(@types/node@22.8.6)(sass-embedded@1.80.6))(vue@3.5.12))
       '@vueuse/core': 11.2.0(vue@3.5.12)
+      vue: 3.5.12
+      vuepress: 2.0.0-rc.18(@vuepress/bundler-vite@2.0.0-rc.18(@types/node@22.8.6)(sass-embedded@1.80.6))(vue@3.5.12)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - typescript
+
+  '@vuepress/plugin-baidu-analytics@2.0.0-rc.57(vuepress@2.0.0-rc.18(@vuepress/bundler-vite@2.0.0-rc.18(@types/node@22.8.6)(sass-embedded@1.80.6))(vue@3.5.12))':
+    dependencies:
+      '@vuepress/helper': 2.0.0-rc.57(vuepress@2.0.0-rc.18(@vuepress/bundler-vite@2.0.0-rc.18(@types/node@22.8.6)(sass-embedded@1.80.6))(vue@3.5.12))
       vue: 3.5.12
       vuepress: 2.0.0-rc.18(@vuepress/bundler-vite@2.0.0-rc.18(@types/node@22.8.6)(sass-embedded@1.80.6))(vue@3.5.12)
     transitivePeerDependencies:
