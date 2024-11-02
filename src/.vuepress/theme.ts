@@ -28,7 +28,7 @@ export default hopeTheme({
   sidebar,
 
   // 页脚
-  footer: "默认页脚",
+  footer: "分享经验、传递价值、成就你我",
   displayFooter: true,
 
   // 博客相关
