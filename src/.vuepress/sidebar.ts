@@ -5,5 +5,6 @@ export default sidebar({
     "",
     "intro",
   ],
+  "/code/": "structure",
   "/whisper/": "structure",
 });
