@@ -1,5 +1,6 @@
 ---
 title: PostgreSQL 可以代替 MongoDB 吗？
+shortTitle: PostgreSQL vs MongoDB ?
 icon: database
 date: 2024-08-26 16:42:36
 category:
