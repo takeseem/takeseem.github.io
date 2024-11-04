@@ -1,5 +1,5 @@
 ---
-title: DB 实践
+title: DB
 icon: database
 date: 2024-11-02 14:37:00
 article: false

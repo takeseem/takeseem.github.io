@@ -1,5 +1,5 @@
 ---
-title: Kotlin 编程实践
+title: Kotlin
 icon: code
 date: 2024-11-02 14:37:00
 article: false
