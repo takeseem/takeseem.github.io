@@ -7,7 +7,7 @@ category:
   - js
 tag:
   - js
-order: 1
+order: 10
 ---
 
 JavaScript 有 7 种数据类型：undefined、null、Boolean、String、Number、Symbol 和 Object。每一种类型都有其独特的特点和使用场景。通过深入学习这些类型，我对以下几点有了更深刻的理解：

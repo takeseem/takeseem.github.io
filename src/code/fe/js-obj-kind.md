@@ -8,7 +8,7 @@ category:
   - js
 tag:
   - js
-order: 3
+order: 30
 ---
 
 JavaScript 是一门灵活的语言，而对象无处不在。那么，JavaScript 中的对象到底有哪些分类？今天，我们将深入剖析宿主对象和内置对象，帮助你全面掌握它们的区别与应用场景。

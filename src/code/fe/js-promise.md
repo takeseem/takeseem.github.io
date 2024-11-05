@@ -9,7 +9,7 @@ category:
 tag:
   - js
   - promise
-order: 4
+order: 40
 ---
 
 在 JavaScript 中，Promise 是处理异步编程的重要工具。要深入理解 Promise 的执行过程，我们需要从 JavaScript 引擎的执行机制入手，尤其是 事件循环（Event Loop）和 任务队列（Task Queue）的运作方式。

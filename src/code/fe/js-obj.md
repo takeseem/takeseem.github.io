@@ -8,7 +8,7 @@ category:
   - js
 tag:
   - js
-order: 2
+order: 20
 ---
 
 JavaScript 中的对象究竟是什么？它不仅是键值对的集合，还是支撑整个语言运行的核心之一。无论是小白还是有经验的开发者，掌握 JavaScript 对象都是提升技能的关键。
