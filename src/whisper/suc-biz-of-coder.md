@@ -1,5 +1,5 @@
 ---
-title: 技术优秀的人，创业能不能成功？
+title: 技术优秀的人创业能不能成？
 icon: user-doctor
 date: 2024-08-22 22:53:32
 category:
