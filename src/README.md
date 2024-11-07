@@ -13,6 +13,11 @@ projects:
     desc: 记录最实用的开发方案和最佳实践
     link: /code/
 
+  - name: 架构设计
+    icon: sitemap
+    desc: 记录最实用的架构设计方案和最佳实践
+    link: /arch-design/
+
   - name: 低语
     icon: cloud-moon
     desc: 梦呓之地，自说自话，不知所云
