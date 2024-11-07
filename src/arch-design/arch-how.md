@@ -1,7 +1,7 @@
 ---
 title: 怎样做架构设计？
 icon: pencil
-cover: /arch-design/arch-how.jpg
+cover: /assets/images/arch-how.jpg
 date: 2024-11-07 10:59:57
 category:
   - 架构
