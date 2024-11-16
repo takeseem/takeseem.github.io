@@ -41,7 +41,7 @@ tag:
 - 压缩对 cpu 也有一定影响
 
 其他参考：
-- postgresql之物理存储结构
-- TOAST 数据库物理存储
+- [postgresql之物理存储结构](https://fugangqiang.github.io/posts/database/postgresql/postgresql%E4%B9%8B%E7%89%A9%E7%90%86%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84.html)
+- [TOAST 数据库物理存储](https://www.postgresql.org/docs/current/storage-toast.html)[zh](http://www.postgres.cn/docs/current/storage-toast.html)
 
 **结论：可以使用 PostgreSQL 代替 MongoDB**
