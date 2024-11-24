@@ -1,3 +1,14 @@
+---
+title: flex 布局
+icon: pallet
+date: 2024-11-24 15:46:37
+category:
+  - react
+tag:
+  - react
+  - 开发日常
+order: 10
+---
 
 ## 基本概念 [<HopeIcon icon="link"/> mdn](https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_flexible_box_layout/Basic_concepts_of_flexbox)
 
