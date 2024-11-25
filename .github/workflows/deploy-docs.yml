@@ -49,6 +49,7 @@ jobs:
         with:
           repository: 'takeseem/demo-react'
           ref: 'main'
+          path: demo-react
 
       - name: demo-react build and mv
         working-directory: demo-react
