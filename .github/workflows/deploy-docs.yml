@@ -44,6 +44,19 @@ jobs:
           pnpm run docs:build
           > src/.vuepress/dist/.nojekyll
 
+      - name: demo-react checkout
+        uses: actions/checkout@v4
+        with:
+          repository: 'takeseem/demo-react'
+          ref: 'main'
+
+      - name: demo-react build and mv
+        working-directory: demo-react
+        run: |
+          pnpm i
+          pnpm run build
+          mv out ../src/.vuepress/dist/demo-react
+
       - name: 部署文档
         uses: JamesIves/github-pages-deploy-action@v4
         with:

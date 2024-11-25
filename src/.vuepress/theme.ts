@@ -1,16 +1,16 @@
 import { hopeTheme } from "vuepress-theme-hope";
 
-import navbar from "./navbar.js";
+import navbar, { hostname } from "./navbar.js";
 import sidebar from "./sidebar.js";
 
 export default hopeTheme({
-  hostname: "https://www.takeseem.com",
+  hostname: hostname,
   darkmode: "toggle",
   fullscreen: true,
 
   author: {
     name: "全球指数",
-    url: "https://www.takeseem.com",
+    url: hostname,
   },
 
   iconAssets: "fontawesome-with-brands",
