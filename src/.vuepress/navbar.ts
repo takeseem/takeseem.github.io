@@ -6,10 +6,10 @@ export default navbar([
   "/",
   "/code/",
   {
-    text: "编程演示",
+    text: "Demo",
     icon: "hand-pointer",
     children: [
-      { text: "Demo React", icon: "fa-brands fa-react", link: `${hostname}/demo-react`, target: "_demo-react"},
+      { text: "Demo React", icon: "fa-brands fa-react", link: `${hostname}/demo-react` },
     ],
   },
 	"/arch-design/",
