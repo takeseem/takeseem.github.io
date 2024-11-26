@@ -36,4 +36,4 @@ order: 15
 - state 放置到哪儿？用到 state 的是：`组件 2`、`组件 4`，故 state 放置到 `组件 1`
 
 ## demo
-- [https://www.takeseem.com/demo-react/demo/react-think]()
+- [/demo-react/demo/react-think](https://www.takeseem.com/demo-react/demo/react-think)
