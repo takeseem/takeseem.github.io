@@ -66,12 +66,12 @@ git 下载：https://git-scm.com/downloads
 ## 步骤四：安装开发工具（IDE）
 在开发过程中，选择一个合适的编辑器将极大提升你的效率。这里推荐使用 Visual Studio Code (VSCode)，它不仅免费且功能强大，还拥有丰富的插件支持。如果你愿意尝试收费的 IDE，WebStorm 也是一个不错的选择，提供 30 天试用期。
 
-vscode 下载：https://code.visualstudio.com/
-
-推荐安装的插件
-- 简体中文语言包：优化中文用户的使用体验。
-- 国产 AI 辅助编程插件 Fitten Code：智能代码补全，提升开发效率。
-![vscode plugins](vs-plugin1.png)
+- 安装可参考：[vscode](/code/IDE/vscode)
+- ESLint：
+  - 启用 [eslint-plugin-react-hooks](https://www.npmjs.com/package/eslint-plugin-react-hooks) 规则 (Next.js项目已集成无须添加)
+  - 安装：`pnpm i -D eslint-plugin-react-hooks`
+  - 配置文件 `.eslintrc(.js | .json)`
+- Prettier：代码格式化。我不喜欢使用，格式化后影响阅读，我一般用 vscode 默认的格式化。
 
 ## 步骤五：运行和调试 React 项目
 现在，我们已经准备好了 React 项目，接下来就是启动和调试项目了。
