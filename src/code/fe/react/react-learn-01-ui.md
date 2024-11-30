@@ -12,7 +12,7 @@ order: 17
 
 ## 参考
 - [React 官方文档](https://zh-hans.react.dev/learn/describing-the-ui)
-- [demo 示例](https://www.takeseem.com/demo-react/demo/react-jsx/)
+- [demo 示例](https://www.takeseem.com/demo-react/demo/react-jsx)
 
 ## 怎样写 React UI ？
 - 在 React 中，我们可以用 JSX 来写 UI， JSX 是 JavaScript 的一种语法扩展，它允许我们在 JavaScript 代码中嵌入 HTML 标签。
