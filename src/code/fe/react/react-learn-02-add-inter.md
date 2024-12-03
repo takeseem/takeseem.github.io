@@ -63,5 +63,48 @@ order: 17
 - React 在事件处理函数执行完成后，批处理 state 更新队列
 
 ## 如何更新对象的状态？
+- state 中可以放置任何对象，应将 state 视为只读的
+- 更新 state 中的对象，使用展开语法（`...`）复制对象
+  ```jsx
+  const [state, setState] = useState({
+    name: "John Doe",
+    age: 30,
+    arts: {
+      title: "React",
+      city: "Hamburg",
+    },
+  });
+
+  setState({
+    ...state,
+    name: "Jane Doe",
+    arts: {
+      ...state.arts,
+      city: "Berlin",
+    },
+  });
+  ```
+- 使用 [Immer](https://github.com/immerjs/use-immer) 库
+  - 安装：`pnpm install immer use-immer`
+  - 如何运行的？`draft` 是一种对象代理 [Proxy](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
+  - 使用：
+      ```jsx
+      const [state, setState] = useImmer({
+        name: "John Doe",
+        age: 30,
+        arts: {
+          title: "React",
+          city: "Hamburg",
+        },
+      });
+
+      setState(draft => {
+        draft.name = "Jane Doe";
+        draft.arts.city = "Berlin";
+      });
+      ```
 
 ## 如何更新数组的状态？
+- 同样的你不应该修改 state 数组
+- 更新 state 数组时，应创建新数组，如：使用展开语法（`...`）复制数组
+- 使用 [Immer](https://github.com/immerjs/use-immer) 库
