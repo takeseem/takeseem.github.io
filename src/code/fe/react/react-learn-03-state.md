@@ -104,12 +104,98 @@ order: 17
 
 ### 尝试一些挑战
 - 务必完成官方：[尝试一些挑战](https://zh-hans.react.dev/learn/sharing-state-between-components#challenges) 
-  - [挑战: 同步输入状态]()
-  - [挑战: 列表过滤]()
+  - 挑战: 同步输入状态
+  - 挑战: 列表过滤
 
 ## 如何控制状态的保留或重置
+- React 何时保留或重置 state
+  - React [渲染树](https://zh-hans.react.dev/learn/understanding-your-ui-as-a-tree#the-render-tree)
+  - React 组件 state 和 渲染是一一对应的，渲染时会创建 state，一旦被替换或移除就会销毁 state。
+  - 注意：`对 React 来说重要的是组件在 UI 树中的位置,而不是在 JSX 中的位置！`也就是说位于相同位置的相同组件，对 React 来说，它就是同一个组件。
+- 如何强制 React 重置组件的状态
+  - 方法一：将组件渲染在不同的位置，这里每一对`{}`就是一个位置
+    ```jsx
+    return (
+      <>
+        {isPlayerA &&
+          <Player name="Player A" />
+        }
+        {!isPlayerA &&
+          <Player name="Player B" />
+        }
+      </>
+    );
+    ```
+  - 方法二：使用 key 来重置 state，key 来让 React 区分任何组件，注意：key 不必全局唯一，它只是用于 `父组件内部` 区分组件的标识。
+    ```jsx
+    return (
+      <>
+        {isPlayerA
+          ? <Player key="Player A" name="Player A" />
+          : <Player key="Player B" name="Player B" />
+        }
+      </>
+    );
+    ```
+- 为被移除的组件保留 state
+  - 方法一：利用 CSS 隐藏起来，缺点：在复杂的 UI 中 DOM 依然存在，存在性能问题。
+  - 方法二：状态提升到父组件中，这是常见的解决办法
+  - 方法三：状态保存到 `localStorage`
 
-## 如何在函数中整合复杂的状态逻辑
+### 摘要
+- 只要在相同位置渲染的是相同组件， React 就会保留状态。
+- state 不会被保存在 JSX 标签里。它与你在树中放置该 JSX 的位置相关联。
+- 你可以通过为一个子树指定一个不同的 key 来重置它的 state。
+- 不要嵌套组件的定义，否则你会意外地导致 state 被重置。
+
+### 尝试一些挑战
+- 务必完成官方：[尝试一些挑战](https://zh-hans.react.dev/learn/preserving-and-resetting-state#challenges) 
+  - 修复丢失的输入框文本：通过保持输入框组件位置不变来修复。
+  - 交换两个表单字段：通过设置组件 key 从而区分组件并保持其 state。
+  - 重置详情表单：
+  - 清除正在加载的图片
+  - 修复列表中错位的 state
+
+## 如何在函数中整合复杂的状态逻辑？
+### useReducer
+::: tip
+当有许多状态变更逻辑时，事件处理会过于分散，你可以将组件的所有状态处理逻辑整合到一个 `reducer` 函数中。
+:::
+- [`useReducer`](https://zh-hans.react.dev/reference/react/useReducer)
+- 如何编写一个好的 `reducer`
+  - `reducer 必须是纯粹的`：reducer 是在渲染时运行的，actions 会排队直到下一次渲染。`纯粹`：即当输入相同时，输出也是相同的，不应包含异步请求、定时器或者任何副作用（对组件外部有影响的操作），应该以不可变值的方式更新 `对象` 和 `数组`。
+  - `每个 action 都描述了一个单一的用户交互，即使它会引发数据的多个变化`：举个例子，如果用户在一个由 reducer 管理的表单（包含五个表单项）中点击了 重置按钮，那么 dispatch 一个 reset_form 的 action 比 dispatch 五个单独的 set_field 的 action 更加合理。如果你在一个 reducer 中打印了所有的 action 日志，那么这个日志应该是很清晰的，它能让你以某种步骤复现已发生的交互或响应。这对代码调试很有帮助！
+- 使用 Immer 简化 reducer：[`useImmerReducer`](https://github.com/immerjs/use-immer#useimmerreducer)
+
+### 摘要
+- 用：[`useReducer`](https://zh-hans.react.dev/reference/react/useReducer) 替换 `useState`
+  1. 通过事件处理函数 dispatch actions；
+  1. 编写一个 reducer 函数，它接受传入的 state 和一个 action，并返回一个新的 state；
+  1. 使用 useReducer 替换 useState；
+- Reducer 可能需要你写更多的代码，但是这有利于代码的调试和测试。
+- Reducer 必须是纯净的。
+- 每个 action 都描述了一个单一的用户交互。
+- 使用 [`useImmerReducer`](https://github.com/immerjs/use-immer#useimmerreducer) 来帮助你在 reducer 里直接修改状态。
+
+### 尝试一些挑战
+- 务必完成官方：[尝试一些挑战](https://zh-hans.react.dev/learn/extracting-state-logic-into-a-reducer#challenges) 
+  - 通过事件处理函数 dispatch actions
+  - 发送消息时清空输入框 
+  - 切换 tab 时重置输入框内容 
+  - 从零开始实现 `useReducer`
+    - `reducer` 接受两个参数：`state` 当前状态，`action` 当前动作及其数据
+    - `reducer` 返回新状态
+    ```jsx
+    function useReducer(reducer, initialState) {
+      const [state, setState] = useState(initialState);
+
+      const dispatch = (action) => {
+        setState(reducer(state, action));
+      };
+
+      return [state, dispatch];
+    }
+    ```
 
 ## 如何避免数据通过 prop 逐级透传
 
