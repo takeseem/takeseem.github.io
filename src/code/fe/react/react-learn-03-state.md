@@ -197,6 +197,88 @@ order: 17
     }
     ```
 
-## 如何避免数据通过 prop 逐级透传
+## 如何避免数据通过 props 逐级透传？
+- 如果某个 `state` 状态分布在组件树的多个叶子节点，按状态提升逻辑，将出现逐层提升，状态将通过 props 逐层透传。
+  ![props 透传](react-learn-03-state-2.png)
+- [Context](https://zh-hans.react.dev/learn/passing-data-deeply-with-context)：传递 props 的另一种方法，Context 可以让父节点，甚至是很远的父节点都可以为其内部的整个组件树提供数据。
+  ![使用 context](react-learn-03-state-3.png)
+- 使用步骤
+  1. `创建`一个 context [createContext](https://zh-hans.react.dev/reference/react/createContext)
+    ```jsx
+    const LevelContext = createContext(1);`
+    ```
+  2. 在需要数据的组件内 `使用` context [useContext](https://zh-hans.react.dev/reference/react/useContext)
+    ```jsx
+    function Heading({ children }) {
+      const level = useContext(LevelContext);
+      // ...
+    }
+    ```
+  3. 在指定数据的组件中 `提供` 这个 context，用 context provider 包裹起来 提供 LevelContext
+    ```jsx
+    function Section({ level, children }) {
+      return (
+        <section className="section">
+          <LevelContext.Provider value={level}>
+            {children}
+          </LevelContext.Provider>
+        </section>
+      );
+    }
+    ```
+### 如何避免滥用 context？
+::: tip 可以先考虑以下几种替代方案
+- [使用 props 传递](https://zh-hans.react.dev/learn/passing-props-to-a-component)：通过十几个组件向下传递一堆 props 并不罕见，这就像埋头苦干，props 让数据流变得清晰。
+- 抽象组件并将 [JSX 作为 children 传递](https://zh-hans.react.dev/learn/passing-props-to-a-component#passing-jsx-as-children)，如：`<Layout posts={posts} />` 中 `posts` 的传递是否可以转换为 `children`：`<Layout><Posts posts={posts} /></Layout>`
+- 如果这两种方案都不适合时，再考虑使用 context
+:::
 
-## 如何随着应用的增长去扩展状态管理
+### context 的使用场景
+- `主题：` 通常在应用顶层放一个 context provider，并在需要调整其外观的组件中使用该 context。
+- `当前账户：`将当前登录用户信息放到 context 中，可方便地在任何位置读取它。某些应用还允许你同时操作多个账户（例如，以不同用户的身份发表评论）。在这些情况下，将 UI 的一部分包裹到具有不同账户数据的 provider 中会很方便。
+- `路由：`大多数路由方案在其内部用 context 来保存当前路由。这就是每个链接“知道”它是否处于活动状态的方式。
+- `状态管理：` 随着应用增长，最终在靠近应用顶部的位置可能会有很多 state。许多遥远的下层组件如果想要修改它们，通常 将 reducer 与 context 搭配使用来管理复杂的状态并将其传递给深层的组件来避免过多的麻烦。
+
+Context 不局限于静态值。如果你在下一次渲染时传递不同的值，React 将会更新读取它的所有下层组件！这就是 context 经常和 state 结合使用的原因。
+
+如果树中不同部分的远距离组件需要某些信息，context 将会对你大有帮助。
+
+
+### 摘要
+- Context 使组件向其下方的整个树提供信息。
+- 传递 Context 的方法:
+  1. 通过 `export const MyContext = createContext(defaultValue)` 创建并导出 context。
+  1. 在无论层级多深的任何子组件中，把 context 传递给 `useContext(MyContext)` Hook 来读取它。
+  1. 在父组件中把 children 包在 `<MyContext.Provider value={...}>` 中来提供 context。
+- Context 会穿过中间的任何组件。
+- Context 可以让你写出 “较为通用” 的组件。
+- 在使用 context 之前，先试试传递 props 或者将 JSX 作为 children 传递。
+
+### 尝试一些挑战
+- 务必完成官方：[尝试一些挑战](https://zh-hans.react.dev/learn/passing-data-deeply-with-context#challenges) 
+  - 用 context 替代逐层 props
+
+## 如何结合使用 `reducer` 和 `context`？
+- 用 [`useReducer`](https://zh-hans.react.dev/reference/react/useReducer) 整合状态更新逻辑
+- 用 [`useContext`](https://zh-hans.react.dev/reference/react/useContext) 将信息跨组件树传递给深层次的组件
+- 如何结合使用 `reducer` 和 `context`？
+  1. 创建 context：[`createContext`](https://zh-hans.react.dev/reference/react/createContext)
+  2. 将 state 和 dispatch 放入 context：[Provider](https://zh-hans.react.dev/reference/react/createContext#provider)
+  3. 在组件树的任何地方 使用 context：[`useContext`](https://zh-hans.react.dev/reference/react/useContext)
+
+### 摘要
+- 你可以将 reducer 与 context 相结合，让任何组件读取和更新它的状态。
+- 为子组件提供 state 和 dispatch 函数：
+  1. 创建两个 context (一个用于 state,一个用于 dispatch 函数)。
+  1. 让组件的 context 使用 reducer。
+  1. 使用组件中需要读取的 context。
+- 你可以通过将所有传递信息的代码移动到单个文件中来进一步整理组件。
+  - 你可以导出一个像 TasksProvider 可以提供 context 的组件。
+  - 你也可以导出像 useTasks 和 useTasksDispatch 这样的自定义 Hook。
+- 你可以在你的应用程序中大量使用 context 和 reducer 的组合。
+
+### 尝试一些挑战
+- 务必完成官方的：[结合使用示例](https://zh-hans.react.dev/learn/scaling-up-with-reducer-and-context#combining-a-reducer-with-context)
+  - [demo](https://www.takeseem.com/demo-react/demo/react-state#useReducerAndContext)
+  - [官方代码 示例](https://github.com/takeseem/demo-react/commits/0908b9f15c0ece1a7b32e77aa249168bf7922b71/)
+  - [最终代码](https://github.com/takeseem/demo-react/tree/5c6b452a8e99b2e61919d8d7f42974b396c73b82)
