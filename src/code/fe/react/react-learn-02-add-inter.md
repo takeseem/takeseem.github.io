@@ -1,6 +1,6 @@
 ---
 title: React 交互
-icon: fa-regular fa-handshake
+icon: handshake
 date: 2024-11-30 12:22:36
 category:
   - 前端
