@@ -91,7 +91,44 @@ order: 17
 
 
 ## 怎样将组件与外部系统同步？
-- 使用 Effect 进行同步
+- 使用 Effect 进行同步，它允许你在渲染结束后执行一些代码。
+- 回顾 React 组件逻辑
+  1. 渲染代码：处理 props 和 state，是一种纯粹的计算结果
+  2. 事件处理：处理用户事件，是一种副作用，通常会改变程序状态
+- Effect 在 React 渲染提交应用到 DOM 后运行，是一种副作用。
+- 如何编写 Effect，遵循三个步骤
+  1. `声明 Effect`：在组件顶部调用 [`useEffect`](https://zh-hans.react.dev/reference/react/useEffect#reference)
+    ```JSX
+    function MyComponent() {
+      useEffect(() => {
+        // 每次渲染提交后都会执行此处的代码
+      });
+      return <div />;
+    }
+    ```
+  2. `指定 Effect 依赖`：useEffect() 第二个参数是一个依赖数组，只有当依赖项发生变化时，Effect 才会重新执行。
+    - React 使用 [Object.is](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/is) 来比较依赖项
+    - 你也不能随意选择依赖项，如果指定的依赖项与 React 根据 Effect 内部代码所推断出的依赖不匹配，你将收到来自 linter 的错误提示。
+  3. `必要时添加清理操作`：useEffect 可以通过返回一个函数来执行清理操作。
+  - 避免在 Effect 中修改 state 防止死循环。因为 Effect 修改 state 又会触发组件的重新渲染，导致 Effect 再次执行，从而形成死循环。这时你也许不需要 Effect。
+
+### 摘要
+- 与事件不同，Effect 由渲染本身引起，而非特定的交互。
+- Effect 允许你将组件与某些外部系统（第三方 API、网络等）同步。
+- 默认情况下，Effect 在每次渲染（包括初始渲染）后运行。
+- 如果所有依赖项都与上一次渲染时相同，React 会跳过本次 Effect。
+- 你不能“选择”依赖项，它们是由 Effect 内部的代码所决定的。
+- 空的依赖数组（[]）对应于组件的“挂载”，即组件被添加到页面上时。
+- 仅在严格模式下的开发环境中，React 会挂载两次组件，以对 Effect 进行压力测试。
+- 如果你的 Effect 因为重新挂载而出现问题，那么你需要实现一个清理函数。
+- React 会在 Effect 再次运行之前和在组件卸载时调用你的清理函数。
+
+### 尝试一些挑战
+- 务必完成官方：[尝试一些挑战](https://zh-hans.react.dev/learn/synchronizing-with-effects#challenges)
+  - 挂载后聚焦于表单字段 
+  - 有条件地聚焦于表单字段
+  - 修复会触发两次的定时器 
+  - 解决在 Effect 中获取数据的问题
 
 ## 从组件中删除不必要的 Effect
 - 两种常见的不必使用 Effect 的情况：
