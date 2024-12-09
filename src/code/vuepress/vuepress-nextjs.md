@@ -15,7 +15,7 @@ star: true
 ---
 
 ## 需求背景
-
+- VuePress 怎样集成 React、Next.js 项目？
 - [博客](https://github.com/takeseem/takeseem.github.io)使用 [VuePress Theme Hope](https://theme-hope.vuejs.press/zh/) 构建：[https://www.takeseem.com/]()
 - [demo-react](https://github.com/takeseem/demo-react) 用 [Next.js](https://nextjs.org/) 开发，希望集成到博客的 /demo-react 路径下：[https://www.takeseem.com/demo-react](https://www.takeseem.com/demo-react)
 

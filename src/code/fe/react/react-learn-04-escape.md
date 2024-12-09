@@ -51,10 +51,47 @@ order: 17
 
 
 ## 在 React 中怎样访问 DOM？
+- 使用一个指向 DOM 节点的 ref 就可以访问 DOM，实现 DOM 节点获得焦点、滚动或测量它的尺寸和位置。
+  ```jsx
+  import { useRef } from 'react';
+  // 最初 myRef.current 是 null
+  const myRef = useRef(null);
+  <div ref={myRef}>
+  // 现在 可以使用浏览器 API 访问 DOM 节点
+  myRef.current.scrollIntoView();
+  ```
+- 怎样在循环中使用 ref？[ref 回调函数](https://zh-hans.react.dev/reference/react-dom/components/common#ref-callback)
+- 如何访问另一个组件的 DOM 节点？
+  - 使用 [forwardRef](https://zh-hans.react.dev/reference/react/forwardRef#reference) 让组件接收 ref 并将其传递给子组件
+- React 何时添加 refs？
+  - React 在提交阶段设置 ref.current
+  - 更新 DOM 之前，React 将受影响的 ref.current 设置为 null，DOM 更新后，立即设置 ref.current
+- [state 更新是排队进行的](https://zh-hans.react.dev/learn/queueing-a-series-of-state-updates)：所以在修改 state 后，操作 ref 会出现落后的问题，怎么解决？
+  - [flushSync(callback)](https://zh-hans.react.dev/reference/react-dom/flushSync#reference)，你应将其作为最后手段使用
+  - 示例：[用 flushSync 同步更新 state](https://zh-hans.react.dev/learn/manipulating-the-dom-with-refs#flushing-state-updates-synchronously-with-flush-sync)
+- 使用 refs 操作 DOM 的最佳实践
+  - ref 是一种 React 的例外机制，应该在只有跳出 React 时使用，如：管理焦点、滚动位置，或调用 React 未暴露的浏览器 API 时使用。
+  - 如果你通过 ref 手动修改 DOM 可能会与 React 所做的更改发生冲突。
+  - React 应用更改到 DOM，所以你可以通过 ref 修改 React 永远不会更改的部分就可以避免冲突。
+
+### 摘要
+- Refs 是一个通用概念，但大多数情况下你会使用它们来保存 DOM 元素。
+- 你通过传递 `<div ref={myRef}>` 指示 React 将 DOM 节点放入 myRef.current。
+- 通常，你会将 refs 用于非破坏性操作，例如聚焦、滚动或测量 DOM 元素。
+- 默认情况下，组件不暴露其 DOM 节点。 你可以通过使用 forwardRef 并将第二个 ref 参数传递给特定节点来暴露 DOM 节点。
+- 避免更改由 React 管理的 DOM 节点。
+- 如果你确实修改了 React 管理的 DOM 节点，请修改 React 没有理由更新的部分。
+
+### 尝试一些挑战
+- 务必完成官方：[尝试一些挑战](https://zh-hans.react.dev/learn/manipulating-the-dom-with-refs#challenges)
+  - 播放和暂停视频
+  - 使搜索域获得焦点
+  - 滚动图像轮播
+  - 使分开的组件中的搜索域获得焦点
 
 
 ## 怎样将组件与外部系统同步？
-
+- 使用 Effect 进行同步
 
 ## 从组件中删除不必要的 Effect
 - 两种常见的不必使用 Effect 的情况：
@@ -69,7 +106,6 @@ order: 17
     const fullName = firstName + ' ' + lastName;
     ```
   - 不要使用 Effect 来处理用户事件。
-
 
 ## Effect 的生命周期 不同于 组件的生命周期?
 - 组件可以挂载、更新、卸载，但是 Effect 只能做两件事：`开始同步某些东西` 和 `停止同步它`。
