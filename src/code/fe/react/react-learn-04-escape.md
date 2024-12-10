@@ -130,23 +130,52 @@ order: 17
   - 修复会触发两次的定时器 
   - 解决在 Effect 中获取数据的问题
 
-## 从组件中删除不必要的 Effect
-- 两种常见的不必使用 Effect 的情况：
-  - 不要为了渲染而使用 Effect 来转换数据。
-    ```jsx
-    const [fullName, setFullName] = useState('');
-    useEffect(() => {
-      setFullName(firstName + ' ' + lastName);
-    }, [firstName, lastName]);
+## 你可能不需要 Effect
+- 如果你可以在渲染期间计算某些内容，则不需要使用 Effect。
+  - 如果没有涉及到外部系统，而只是根据 props 或 state 变化来更新组件，就不应该使用 Effect。因为 props 或 state 的变化本来就会触发 React 更新组件。
+  - 你不必使用 Effect 来处理用户事件，通常应该在相应的事件处理函数中处理用户事件。
+- 想要缓存昂贵的计算，请使用 [useMemo](https://zh-hans.react.dev/reference/react/useMemo) 缓存一个昂贵的计算，而不是 useEffect。
+- 想要重置整个组件树的 state，请传入不同的 key。
+- 想要在 prop 变化时重置某些特定的 state，请在渲染期间处理。
+- 组件 显示 时就需要执行的代码应该放在 Effect 中，否则应该放在事件处理函数中。
+- 如果你需要更新多个组件的 state，最好在单个事件处理函数中处理。
+- 当你尝试在不同组件中同步 state 变量时，请考虑状态提升。
+- 你可以使用 Effect 获取数据，但你需要实现清除逻辑以避免竞态条件。
 
-    // 这是没必要的，应该 fullName 是可计算的，更好的实现如下：
-    const fullName = firstName + ' ' + lastName;
-    ```
-  - 不要使用 Effect 来处理用户事件。
+### 尝试一些挑战
+- 务必完成官方：[尝试一些挑战](https://zh-hans.react.dev/learn/you-might-not-need-an-effect#challenges)
+  - 第 1 个挑战 共 4 个挑战: 不用 Effect 转换数据
+  - 第 2 个挑战 共 4 个挑战: 不用 Effect 缓存计算结果
+  - 第 3 个挑战 共 4 个挑战: 不用 Effect 重置 state
+  - 第 4 个挑战 共 4 个挑战: 不用 Effect 提交表单
+
 
 ## Effect 的生命周期 不同于 组件的生命周期?
 - 组件可以挂载、更新、卸载，但是 Effect 只能做两件事：`开始同步某些东西` 和 `停止同步它`。
 - Effect 如果依赖于随时间变化的 props 和 state，这个循环会发生多次。
+- Effect 和依赖项的关系
+  - 如果 Effect 没有进行任何同步操作，可能是不必要的。
+  - 如果它同时进行了几个独立的同步操作，因其依赖项是独立的，通常将 Effect 拆分为多个 Effect。
+  - 如果想读取 props 或 state 的最新值，又不想对 Effect 做出反应并重新同步，可以将 Effect 拆分为具有反应性的部分（保留在 Effect 中）和非反应性的部分（提取为名为 “Effect Event” 的内容）。
+  - 避免将对象和函数作为依赖项。如果在渲染过程中创建对象和函数，然后在 Effect 中读取它们，它们将在每次渲染时都不同。这将导致 Effect 每次都重新同步。
+
+### 摘要
+- 组件可以挂载、更新和卸载。
+- 每个 Effect 与周围组件有着独立的生命周期。
+- 每个 Effect 描述了一个独立的同步过程，可以 `开始` 和 `停止`。
+- 在编写和读取 Effect 时，要独立地考虑每个 Effect（如何开始和停止同步），而不是从组件的角度思考（如何挂载、更新或卸载）。
+- 在组件主体内声明的值是“响应式”的。
+- 响应式值应该重新进行同步 Effect，因为它们可以随着时间的推移而发生变化。
+- 检查工具验证在 Effect 内部使用的所有响应式值都被指定为依赖项。
+- 检查工具标记的所有错误都是合理的。总是有一种方法可以修复代码，同时不违反规则。
+
+### 尝试一些挑战
+- 务必完成官方：[尝试一些挑战](https://zh-hans.react.dev/learn/lifecycle-of-reactive-effects#challenges)
+  - 第 1 个挑战 共 5 个挑战: 修复每次输入均重新连接
+  - 第 2 个挑战 共 5 个挑战: 打开和关闭状态同步 
+  - 第 3 个挑战 共 5 个挑战: 寻找过时值的错误 
+  - 第 4 个挑战 共 5 个挑战: 修复连接开关 
+  - 第 5 个挑战 共 5 个挑战: 填充一系列选择框 
 
 
 ## 防止某些值重新触发 Effect
