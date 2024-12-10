@@ -177,11 +177,33 @@ order: 17
   - 第 4 个挑战 共 5 个挑战: 修复连接开关 
   - 第 5 个挑战 共 5 个挑战: 填充一系列选择框 
 
+## 将事件从 Effect 中分开
+- 事件处理 和 Effect
+  | 事件处理 | Effect |
+  | --- | --- |
+  | 在响应特定交互时运行 | 在依赖的 `props` 或 `state` 变化时运行 |
+  | 非响应式逻辑 | 响应式逻辑 |
+- Effect Event [useEffectEvent](https://zh-hans.react.dev/reference/react/experimental_useEffectEvent)
+  - 将非响应式逻辑从 Effect 移到 Effect Event 中，从而获取最新的 props 和 state
+  - 只在 Effect 内部调用 Effect Event。
+  - 不要将 Effect Event 传给其他组件或者 Hook。
+  - 永远在 useEffect 旁边声明 Effect Event
+    ```jsx
+    // 使用 useEffectEvent 创建 Effect Event，在 useEffect 的旁边
+    const onMyHandle = useEffectEvent((args) => {
+      // useEffectEvent 中总是能访问最新的值
+      // 总是能访问最新的 props 和 state
+    });
 
-## 防止某些值重新触发 Effect
-
-
-## 减少 Effect 重新执行的频率
-
-
-## 在组件之间共享逻辑
+    // args 可以没有，如果有的话通常是为了避免丢失 effect 触发时的值
+    // 如：effect 的依赖变化，那么 onMyHandle 中永远只能获取到当前值，而不是变化前的
+    useEffect(() => {
+      onMyHandle(args);
+    }, [args]);
+    ```
+### 尝试一些挑战
+- 务必完成官方：[尝试一些挑战](https://zh-hans.react.dev/learn/separating-events-from-effects#challenges)
+  - 第 1 个挑战 共 4 个挑战: 修复一个不更新的变量
+  - 第 2 个挑战 共 4 个挑战: 修复一个冻结的计数器 
+  - 第 3 个挑战 共 4 个挑战: 修复不可调整的延迟
+  - 第 4 个挑战 共 4 个挑战: 修复延迟通知
