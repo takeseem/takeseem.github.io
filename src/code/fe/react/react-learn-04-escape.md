@@ -201,6 +201,43 @@ order: 17
       onMyHandle(args);
     }, [args]);
     ```
+
+### 不支持 useEffectEvent 怎么写？
+示例：[第 2 个挑战 共 4 个挑战: 修复一个冻结的计数器](https://github.com/takeseem/demo-react/blob/main/app/demo/react-escape/DemoEffectEvent.tsx#L48)
+- 使用：`useEffectEvent` 可以读取最新的 `increment`
+  ```jsx
+  import { experimental_useEffectEvent as useEffectEvent } from 'react';
+
+  const onTick = useEffectEvent(() => {
+    setCount(c => c + increment);
+  });
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      onTick();
+    }, 1000);
+    return () => {
+      clearInterval(id);
+    };
+  }, []);
+  ```
+- 使用 `useRef` 和 `useEffect` 同样可以实现
+  ```jsx
+  const incRef = useRef(increment);
+  useEffect(() => {
+    incRef.current = increment;
+  }, [increment]);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setCount(c => c + incRef.current);
+    }, 1000);
+    return () => {
+      clearInterval(id);
+    };
+  }, []);
+  ```
+
 ### 尝试一些挑战
 - 务必完成官方：[尝试一些挑战](https://zh-hans.react.dev/learn/separating-events-from-effects#challenges)
   - 第 1 个挑战 共 4 个挑战: 修复一个不更新的变量
@@ -226,3 +263,27 @@ order: 17
   - 第 2 个挑战 共 4 个挑战: 修复重新触发动画的问题 
   - 第 3 个挑战 共 4 个挑战: 修复聊天重新连接的问题 
   - 第 4 个挑战 共 4 个挑战: 再次修复聊天重新连接的问题
+
+## 使用自定义 Hook 复用逻辑
+- 用途：逻辑复用、解耦、组合逻辑。
+- 名称必须以 `use` 开头并紧跟一个大写字母，可以返回任意值
+- Hook 只能被：Hook 和组件调用。所以如果函数内部没有使用 Hook，你应该定义的是普通函数，这样其他任何函数都能调用它。
+- Hook 共享的是状态逻辑，而不是状态本身。
+- 每次组件重新渲染时，所有 Hook 会重新运行。
+- Hook 应和组件代码一样保持纯粹。
+- 把自定义 Hook 收到的事件处理函数包裹到 Effect Event。
+- 不要创建像 useMount 仅用于包装原生 Hook，极易丢失依赖，而应该保持业务逻辑的目标具体化。
+
+### 最佳实践
+切记：避免过早优化。
+1. 先直接开始写 Effect，确保每个 Effect 只负责单一职责，并根据需要正确处理依赖项的变化。
+1. 再根据其复杂性和代码组织的需要，考虑是否提取出自定义 Hook。
+
+
+### 尝试一些挑战
+- 务必完成官方：[尝试一些挑战](https://zh-hans.react.dev/learn/reusing-logic-with-custom-hooks#challenges)
+  - 第 1 个挑战 共 5 个挑战: 提取 useCounter Hook
+  - 第 2 个挑战 共 5 个挑战: 让计时器的 delay 变为可配置项
+  - 第 3 个挑战 共 5 个挑战: 从 useCounter 中提取 useInterval
+  - 第 4 个挑战 共 5 个挑战: 修复计时器重置
+  - 第 5 个挑战 共 5 个挑战: 实现交错运动
