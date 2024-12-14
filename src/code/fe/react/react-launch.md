@@ -174,3 +174,88 @@ order: 10
   export default App
   ```
 ![tailwindcss](react-launch-2-tailwindcss.png =50%x)
+- [tailwind Editor 安装](https://tailwindcss.com/docs/editor-setup#intelli-sense-for-vs-code)：[Tailwind CSS IntelliSense
+](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
+
+## 集成 shadcn-ui
+- [shadcn/ui](https://ui.shadcn.com/)：[Github](https://github.com/shadcn-ui/ui)、[安装](https://ui.shadcn.com/docs/installation)
+- [vite 集成 shadcn-ui](https://ui.shadcn.com/docs/installation/vite)
+- 修改 `tsconfig.json` 添加 `compilerOptions`
+  ```json{7-12} title="tsconfig.json"
+  {
+    "files": [],
+    "references": [
+      { "path": "./tsconfig.app.json" },
+      { "path": "./tsconfig.node.json" }
+    ],
+    "compilerOptions": {
+      "baseUrl": ".",
+      "paths": {
+        "@/*": ["./src/*"]
+      }
+    },
+  }
+  ```
+- 修改 `tsconfig.app.json`
+  ```json{5-10} title="tsconfig.app.json"
+  {
+    "compilerOptions": {
+      // ...
+      // 集成 shadcn-ui
+      "baseUrl": ".",
+      "paths": {
+        "@/*": [
+          "./src/*"
+        ]
+      },
+    },
+    // ...
+  }
+  ```
+- 修改 `vite.config.ts`
+  - 安装依赖：`pnpm i -D @types/node`
+  - 修改 `vite.config.ts`
+    ```ts{3,8-12} title="vite.config.ts"
+    import { defineConfig } from 'vite'
+    import react from '@vitejs/plugin-react-swc'
+    import path from 'path'
+
+    // https://vite.dev/config/
+    export default defineConfig({
+      plugins: [react()],
+      resolve: {
+        alias: {
+          "@": path.resolve(__dirname, "./src"),
+        },
+      },
+    })
+    ```
+- 初始化 shadcn-ui
+  - 执行命令：`pnpm dlx shadcn@latest init`
+  - 生成配置文件：`components.json`
+- 使用例子：添加一个按钮组件
+  - 执行命令：`pnpm dlx shadcn@latest add button`
+  - 生成组件：`src/components/Button.tsx`
+  - 使用这个组件，修改：`App.tsx`
+    ```tsx title="App.tsx"
+    import { Button } from "./components/ui/button"
+
+    function App() {
+      return (
+        <div>
+          <Button>Click me</Button>
+        </div>
+      )
+    }
+    export default App
+    ```
+    ![button](react-launch-3-button.png =50%x)
+- vscode 插件
+  - [shadcn-ui 命令插件](https://github.com/SuhelMakkad/vscode-shadcn-ui)：快速安装 shadcn-ui 组件
+    - ctrl + shift + p：输入：`shadcn`
+
+    ![cmd shadcn](react-launch-4-shadcn.png =50%x)
+    
+  - [shadcn/ui snippets](https://github.com/nrjdalal/shadcn-ui-snippets#readme)：代码中快速导入和快速添加 shadcn-ui 组件
+    - 代码中输入：`cni-xxx` 快速导入 xxx 组件
+    - 代码中输入：`cnx-xxx` 快速添加 xxx 组件
