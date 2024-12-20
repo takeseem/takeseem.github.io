@@ -176,8 +176,6 @@ order: 10
     ```
 
 ## 总结
-
-### 知识点
 - [page.tsx 可选参数](https://nextjs.org/docs/app/api-reference/file-conventions/page)：`params`、`searchParams`
   ```tsx title="page.tsx"
   export default function Page({
@@ -210,3 +208,46 @@ order: 10
   - [error.js](https://nextjs.org/docs/app/api-reference/file-conventions/error)
   - [notFound()](https://nextjs.org/docs/app/api-reference/functions/not-found)
   - [note-found.tsx](https://nextjs.org/docs/app/api-reference/file-conventions/not-found)
+- [Next.js 中使用 ESLint](https://nextjs.org/learn/dashboard-app/improving-accessibility#using-the-eslint-accessibility-plugin-in-nextjs)
+- [eslint-plugin-jsx-a11y](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y)
+  - 配置用例中的 rules：`"jsx-a11y/{rule-name: 特定的规则名}": 2`
+- [form 服务端验证](https://nextjs.org/learn/dashboard-app/improving-accessibility#server-side-validation)
+  - 服务端函数需要 bind 确定参数的 [参考 formAction 示例](https://nextjs.org/learn/dashboard-app/improving-accessibility#practice-adding-aria-labels)
+    - 服务端函数
+      ```ts{1,} title="actions.ts"
+      export async function updateInvoice(id: string, prevState: State, formData: FormData) {
+        const validatedFields = UpdateInvoice.safeParse({
+          customerId: formData.get('customerId'),
+          amount: formData.get('amount'),
+          status: formData.get('status'),
+        });
+
+        if (!validatedFields.success) {
+          return {
+            errors: validatedFields.error.flatten().fieldErrors,
+            message: 'Missing Fields. Failed to Update Invoice.',
+          };
+        }
+        // ...
+      }
+      ```
+    - form 组件
+      ```tsx{8-10, } title="edit-form.tsx"
+      export default function EditInvoiceForm({
+        invoice,
+        customers,
+      }: {
+        invoice: InvoiceForm;
+        customers: CustomerField[];
+      }) {
+        const updateInvoiceWithId = updateInvoice.bind(null, invoice.id);
+        const initialState: State = { message: '', errors: {} };
+        const [state, formAction] = useActionState(updateInvoiceWithId, initialState);
+
+        return (
+          <form action={formAction}>
+          // ...
+          </form>
+        );
+      }
+      ```
